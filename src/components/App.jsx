@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from './header/Header'
-import Main from './stepProgress/Main'
+import Header from './Header'
+import Main from './Main'
 
 export default function App() {
 	return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './Navbar'
+import Navbar from './header/Navbar'
 
 function Logo({ imgURL }) {
 	return (
@@ -13,7 +13,7 @@ function Toggle() {
 	return (
 		<>
 			<input id="navbar-toggle" className="navbar-toggle" type="checkbox" />
-			<label for="navbar-toggle" class="burger-container">
+			<label htmlFor="navbar-toggle" className="burger-container">
 				<img
 					className="icon-toggle cursor-point"
 					src="./icons/toggle.svg"

@@ -1,5 +1,5 @@
 import React from 'react'
-import Register from './Register'
+import Register from './stepProgress/Register'
 
 export default function Main() {
 	return (

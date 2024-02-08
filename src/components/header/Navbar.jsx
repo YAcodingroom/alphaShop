@@ -4,7 +4,7 @@ import MenuList from './MenuList'
 
 export default function Navbar() {
 	return (
-		<nav class="navbar-menu">
+		<nav className="navbar-menu">
 			<MenuList />
 			<ActionList />
 		</nav>
