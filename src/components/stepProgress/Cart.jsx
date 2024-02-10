@@ -1,4 +1,20 @@
 import React from 'react'
+const productDatas = [
+	{
+		id: '1',
+		name: '貓咪罐罐',
+		img: 'https://picsum.photos/300/300?text=1',
+		price: 100,
+		quantity: 2,
+	},
+	{
+		id: '2',
+		name: '貓咪干干',
+		img: 'https://picsum.photos/300/300?text=2',
+		price: 200,
+		quantity: 1,
+	},
+]
 
 function Product({ price, imgURL, productName }) {
 	return (
@@ -25,7 +41,7 @@ function Product({ price, imgURL, productName }) {
 						/>
 					</div>
 				</div>
-				<div className="price">$0</div>
+				<div className="price">${price}</div>
 			</div>
 		</div>
 	)
@@ -45,16 +61,14 @@ export default function Cart() {
 		<section className="cart-container col col-lg-5 col-sm-12">
 			<h3 className="cart-title">購物籃</h3>
 			<section className="product-list col col-12" data-total-price="0">
-				<Product
-					price="3999"
-					imgURL="./images/product-1.jpg"
-					productName="破壞補丁修身牛仔褲"
-				/>
-				<Product
-					price="1299"
-					imgURL="./images/product-2.jpg"
-					productName="刷色直筒牛仔褲"
-				/>
+				{productDatas.map((product) => (
+					<Product
+						key={product.id}
+						price={product.price}
+						imgURL={product.img}
+						productName={product.name}
+					/>
+				))}
 			</section>
 			<CartInfo info="shipping" infoLabel="運費" amount="免費" />
 			<CartInfo info="total" infoLabel="小計" amount="$0" />
