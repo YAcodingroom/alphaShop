@@ -31,7 +31,7 @@ function Step({ dataPhase, step, label }) {
 	)
 }
 
-export default function Progress() {
+export default function StepProgressBar() {
 	return (
 		<section className="progress-container col col-12">
 			{stepProgress.map((step) => (

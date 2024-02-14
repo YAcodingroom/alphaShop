@@ -1,5 +1,5 @@
 import React from 'react'
-import Progress from './Progress'
+import StepProgressBar from './StepProgressBar'
 import Form from './Form'
 
 export default function Register() {
@@ -11,7 +11,7 @@ export default function Register() {
 		>
 			<h2 className="register-title col col-12">結帳</h2>
 
-			<Progress />
+			<StepProgressBar />
 			<Form />
 		</section>
 	)
