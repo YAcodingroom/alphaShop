@@ -26,11 +26,7 @@ function Step({ dataPhase, step, label }) {
 				</span>
 				<span className="progress-label">{label}</span>
 			</span>
-			{step !== '3' ? (
-				<span className="progress-bar" data-order={step}></span>
-			) : (
-				''
-			)}
+			{step !== '3' && <span className="progress-bar" data-order={step}></span>}
 		</>
 	)
 }
