@@ -35,8 +35,8 @@ function SocialIcon({ iconURL }) {
 
 export default function Footer() {
 	return (
-		<footer class="site-footer">
-			<div class="footer-container">
+		<footer className="site-footer">
+			<div className="footer-container">
 				<Section>
 					<Logo imgURL="./icons/logo.svg" />
 				</Section>
