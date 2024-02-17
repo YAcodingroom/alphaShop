@@ -56,7 +56,7 @@ function CartInfo({ info, infoLabel, amount }) {
 	)
 }
 
-export default function Cart() {
+export default function Cart({ deliveryFee }) {
 	return (
 		<section className="cart-container col col-lg-5 col-sm-12">
 			<h3 className="cart-title">購物籃</h3>
@@ -70,7 +70,7 @@ export default function Cart() {
 					/>
 				))}
 			</section>
-			<CartInfo info="shipping" infoLabel="運費" amount="免費" />
+			<CartInfo info="shipping" infoLabel="運費" amount={deliveryFee} />
 			<CartInfo info="total" infoLabel="小計" amount="$0" />
 		</section>
 	)

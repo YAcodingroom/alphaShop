@@ -20,6 +20,7 @@ function Register({ children, phase }) {
 
 export default function Main() {
 	const [step, setStep] = useState('address')
+	const [fee, setFee] = useState(0)
 
 	function handleChangeStep(phase, active) {
 		let newPhaseObj
@@ -41,14 +42,19 @@ export default function Main() {
 		setStep(newPhaseObj[0].dataPhase)
 	}
 
+	function handleCalcFee(price) {
+		console.log(price)
+		setFee(price)
+	}
+
 	return (
 		<main className="site-main">
 			<div className="main-container">
 				<Register phase={step}>
 					<StepProgressBar />
-					<Form phase={step} />
+					<Form phase={step} onCalcFee={handleCalcFee} />
 				</Register>
-				<Cart />
+				<Cart deliveryFee={fee} />
 				<ProgressControl phase={step} onChangeStep={handleChangeStep} />
 			</div>
 		</main>

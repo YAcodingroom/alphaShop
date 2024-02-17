@@ -59,6 +59,7 @@ function Select({ largeWidth, smallWidth, label, datas }) {
 		</div>
 	)
 }
+
 function Input({ largeWidth, smallWidth, label, placeholder, type }) {
 	return (
 		<>
@@ -122,10 +123,22 @@ function AddressPhase() {
 }
 
 // shipping phase
-function Shipping({ price, shippingId, shippingName, period }) {
+function Shipping({
+	price,
+	shippingId,
+	shippingName,
+	period,
+	checked,
+	onCalcFee,
+}) {
 	return (
 		<label className="radio-group col col-12" data-price={price}>
-			<input id={shippingId} type="radio" name="shipping" />
+			<input
+				id={shippingId}
+				type="radio"
+				name="shipping"
+				onChange={() => onCalcFee(Number(price))}
+			/>
 			<div className="radio-info">
 				<div className="col col-12">
 					<div className="text">{shippingName}</div>
@@ -137,7 +150,7 @@ function Shipping({ price, shippingId, shippingName, period }) {
 		</label>
 	)
 }
-function ShippingPhase() {
+function ShippingPhase({ onCalcFee }) {
 	return (
 		<>
 			<Shipping
@@ -145,12 +158,14 @@ function ShippingPhase() {
 				shippingId="shipping-standard"
 				shippingName="標準運送"
 				period="約 3~7 個工作天"
+				onCalcFee={onCalcFee}
 			/>
 			<Shipping
 				price="500"
 				shippingId="shipping-dhl"
 				shippingName="DHL 貨運"
 				period="48 小時內送達"
+				onCalcFee={onCalcFee}
 			/>
 		</>
 	)
@@ -198,7 +213,7 @@ function CreditCardPhase() {
 	)
 }
 
-export default function Form({ phase }) {
+export default function Form({ phase, onCalcFee }) {
 	return (
 		<section className="form-container col col-12">
 			<form className="col col-12" data-phase={phase}>
@@ -209,7 +224,7 @@ export default function Form({ phase }) {
 				</h3>
 				<section className="form-body col col-12">
 					{phase === 'address' && <AddressPhase />}
-					{phase === 'shipping' && <ShippingPhase />}
+					{phase === 'shipping' && <ShippingPhase onCalcFee={onCalcFee} />}
 					{phase === 'credit-card' && <CreditCardPhase />}
 				</section>
 			</form>
