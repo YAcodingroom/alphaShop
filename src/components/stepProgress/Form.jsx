@@ -198,13 +198,19 @@ function CreditCardPhase() {
 	)
 }
 
-export default function Form() {
+export default function Form({ phase }) {
 	return (
 		<section className="form-container col col-12">
-			<form className="col col-12" data-phase="address">
-				<h3 className="form-title">寄送地址</h3>
+			<form className="col col-12" data-phase={phase}>
+				<h3 className="form-title">
+					{phase === 'address' && '寄送地址'}
+					{phase === 'shipping' && '運送方式'}
+					{phase === 'credit-card' && '付款資訊'}
+				</h3>
 				<section className="form-body col col-12">
-					<AddressPhase />
+					{phase === 'address' && <AddressPhase />}
+					{phase === 'shipping' && <ShippingPhase />}
+					{phase === 'credit-card' && <CreditCardPhase />}
 				</section>
 			</form>
 		</section>

@@ -1,15 +1,19 @@
 import React from 'react'
 
-function Button({ className, label, imgURL }) {
+function Button({ className, label, imgURL, onChangeStep, phase }) {
 	return (
-		<button className={className}>
+		<button
+			className={`cursor-point ${className}`}
+			onClick={(e) => onChangeStep(e.target.dataset.phase, label)}
+			data-phase={phase}
+		>
 			{label}
-			<img className="cursor-point" src={imgURL} alt="" />
+			{!imgURL || <img src={imgURL} alt={label} data-phase={phase} />}
 		</button>
 	)
 }
 
-function Section({ phase }) {
+function Section({ phase, onChangeStep }) {
 	return (
 		<section className="button-group col col-12" data-phase={phase}>
 			{phase !== 'address' && (
@@ -17,6 +21,8 @@ function Section({ phase }) {
 					className="prev"
 					label="上一步"
 					imgURL="./icons/left-arrow.svg"
+					onChangeStep={onChangeStep}
+					phase={phase}
 				/>
 			)}
 			{phase !== 'credit-card' ? (
@@ -24,18 +30,25 @@ function Section({ phase }) {
 					className="next"
 					label="下一步"
 					imgURL="./icons/right-arrow.svg"
+					onChangeStep={onChangeStep}
+					phase={phase}
 				/>
 			) : (
-				<button className="next">確認下單</button>
+				<Button
+					className="next"
+					label="確認下單"
+					onChangeStep={onChangeStep}
+					phase={phase}
+				/>
 			)}
 		</section>
 	)
 }
 
-export default function ProgressControl() {
+export default function ProgressControl({ onChangeStep, phase }) {
 	return (
 		<section className="progress-control-container col col-lg-6 col-sm-12">
-			<Section phase="address" />
+			<Section phase={phase} onChangeStep={onChangeStep} />
 		</section>
 	)
 }
