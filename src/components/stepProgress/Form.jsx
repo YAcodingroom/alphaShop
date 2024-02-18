@@ -123,14 +123,7 @@ function AddressPhase() {
 }
 
 // shipping phase
-function Shipping({
-	price,
-	shippingId,
-	shippingName,
-	period,
-	checked,
-	onCalcFee,
-}) {
+function Shipping({ price, shippingId, shippingName, period, onCalcFee }) {
 	return (
 		<label className="radio-group col col-12" data-price={price}>
 			<input
