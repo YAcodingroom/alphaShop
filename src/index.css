@@ -987,6 +987,7 @@ section.form-body .input-group select {
 	color: var(--select-true);
 	background-color: transparent;
 	cursor: pointer;
+	appearance: none;
 	-webkit-appearance: none;
 }
 section.form-body .input-group select:required:invalid {
@@ -1010,6 +1011,7 @@ section.form-body .radio-group input[type='radio'] {
 	height: 20px;
 	margin-right: 20px;
 	align-self: center;
+	appearance: none;
 	-webkit-appearance: none;
 }
 section.form-body .radio-group input[type='radio']::before {
