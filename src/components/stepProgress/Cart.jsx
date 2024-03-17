@@ -1,33 +1,18 @@
 import React, { useState } from 'react'
-const productDatas = [
-	{
-		id: '1',
-		name: '貓咪罐罐',
-		img: 'https://picsum.photos/300/300?text=1',
-		price: 100,
-		quantity: 2,
-	},
-	{
-		id: '2',
-		name: '貓咪干干',
-		img: 'https://picsum.photos/300/300?text=2',
-		price: 200,
-		quantity: 1,
-	},
-]
+import { useCart } from '../../Contexts/CartContext'
 
-function Product({ price, imgURL, productName, onCalcTotal }) {
+function Product({ price, imgURL, productName }) {
 	const [amount, setAmount] = useState(0)
-	function handleClick(action) {
-		let productAmount = amount
+	const { onCalcTotal } = useCart()
+
+	function handClick(action) {
 		if (action === 'minus' && amount !== 0) {
-			productAmount -= 1
+			setAmount((amount) => (amount -= 1))
 			onCalcTotal(-price)
 		} else if (action === 'plus') {
-			productAmount += 1
+			setAmount((amount) => (amount += 1))
 			onCalcTotal(price)
-		} else return
-		setAmount(productAmount)
+		}
 	}
 
 	return (
@@ -47,7 +32,7 @@ function Product({ price, imgURL, productName, onCalcTotal }) {
 							src="./icons/minus.svg"
 							alt=""
 							role="button"
-							onClick={(e) => handleClick(e.target.name)}
+							onClick={(e) => handClick(e.target.name)}
 						/>
 						<span className="product-count">{amount}</span>
 						<img
@@ -56,7 +41,7 @@ function Product({ price, imgURL, productName, onCalcTotal }) {
 							src="./icons/plus.svg"
 							alt=""
 							role="button"
-							onClick={(e) => handleClick(e.target.name)}
+							onClick={(e) => handClick(e.target.name)}
 						/>
 					</div>
 				</div>
@@ -75,7 +60,9 @@ function CartInfo({ info, infoLabel, price }) {
 	)
 }
 
-export default function Cart({ deliveryFee, onCalcTotal, total }) {
+export default function Cart() {
+	const { productDatas, fee, total } = useCart()
+
 	return (
 		<section className="cart-container col col-lg-5 col-sm-12">
 			<h3 className="cart-title">購物籃</h3>
@@ -83,14 +70,13 @@ export default function Cart({ deliveryFee, onCalcTotal, total }) {
 				{productDatas.map((product) => (
 					<Product
 						key={product.id}
-						price={product.price}
+						price={Number(product.price)}
 						imgURL={product.img}
 						productName={product.name}
-						onCalcTotal={onCalcTotal}
 					/>
 				))}
 			</section>
-			<CartInfo info="shipping" infoLabel="運費" price={`$${deliveryFee}`} />
+			<CartInfo info="shipping" infoLabel="運費" price={`$${fee}`} />
 			<CartInfo info="total" infoLabel="小計" price={`$${total}`} />
 		</section>
 	)
