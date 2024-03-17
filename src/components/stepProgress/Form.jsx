@@ -73,56 +73,120 @@ function Input({ largeWidth, smallWidth, label, placeholder, type }) {
 	)
 }
 
-// address phase
-function AddressPhase() {
-	return (
-		<>
-			<div className="col col-12">
-				<Select
-					largeWidth="2"
-					smallWidth="s1"
-					label="稱謂"
-					datas={appellation}
+function FormPhase({ phase, onChange }) {
+	if (phase === 'address')
+		return (
+			<>
+				<div className="col col-12">
+					<Select
+						largeWidth="2"
+						smallWidth="s1"
+						label="稱謂"
+						datas={appellation}
+					/>
+					<Input
+						largeWidth="4"
+						smallWidth="s2"
+						label="姓名"
+						placeholder="請輸入姓名"
+						type="text"
+					/>
+				</div>
+				<div className="col col-12">
+					<Input
+						largeWidth="3"
+						smallWidth="full"
+						label="電話"
+						placeholder="請輸入行動電話"
+						type="tel"
+					/>
+					<Input
+						largeWidth="3"
+						smallWidth="full"
+						label="Email"
+						placeholder="請輸入電子郵件"
+						type="email"
+					/>
+				</div>
+				<div className="col col-12">
+					<Select
+						largeWidth="2"
+						smallWidth="full"
+						label="縣市"
+						datas={cities}
+					/>
+					<Input
+						largeWidth="4"
+						smallWidth="full"
+						label="地址"
+						placeholder="請輸入地址"
+						type="text"
+					/>
+				</div>
+			</>
+		)
+
+	if (phase === 'shipping')
+		return (
+			<>
+				<Shipping
+					price="0"
+					shippingId="shipping-standard"
+					shippingName="標準運送"
+					period="約 3~7 個工作天"
+					onCalcFee={onChange}
 				/>
-				<Input
-					largeWidth="4"
-					smallWidth="s2"
-					label="姓名"
-					placeholder="請輸入姓名"
-					type="text"
+				<Shipping
+					price="500"
+					shippingId="shipping-dhl"
+					shippingName="DHL 貨運"
+					period="48 小時內送達"
+					onCalcFee={onChange}
 				/>
-			</div>
-			<div className="col col-12">
-				<Input
-					largeWidth="3"
-					smallWidth="full"
-					label="電話"
-					placeholder="請輸入行動電話"
-					type="tel"
-				/>
-				<Input
-					largeWidth="3"
-					smallWidth="full"
-					label="Email"
-					placeholder="請輸入電子郵件"
-					type="email"
-				/>
-			</div>
-			<div className="col col-12">
-				<Select largeWidth="2" smallWidth="full" label="縣市" datas={cities} />
-				<Input
-					largeWidth="4"
-					smallWidth="full"
-					label="地址"
-					placeholder="請輸入地址"
-					type="text"
-				/>
-			</div>
-		</>
-	)
+			</>
+		)
+
+	if (phase === 'credit-card')
+		return (
+			<>
+				<div className="col col-12">
+					<Input
+						largeWidth="4"
+						smallWidth="full"
+						label="持卡人姓名"
+						placeholder="John Doe"
+						type="text"
+					/>
+				</div>
+				<div className="col col-12">
+					<Input
+						largeWidth="4"
+						smallWidth="full"
+						label="卡號"
+						placeholder="1111 2222 3333 4444"
+						type="text"
+					/>
+				</div>
+				<div className="col col-12">
+					<Input
+						largeWidth="3"
+						smallWidth="s3"
+						label="有效期限"
+						placeholder="MM/YY"
+						type="text"
+					/>
+					<Input
+						largeWidth="3"
+						smallWidth="s3"
+						label="CVC / CCV"
+						placeholder="123"
+						type="text"
+					/>
+				</div>
+			</>
+		)
 }
 
-// shipping phase
 function Shipping({ price, shippingId, shippingName, period, onCalcFee }) {
 	return (
 		<label className="radio-group col col-12" data-price={price}>
@@ -143,68 +207,6 @@ function Shipping({ price, shippingId, shippingName, period, onCalcFee }) {
 		</label>
 	)
 }
-function ShippingPhase({ onCalcFee }) {
-	return (
-		<>
-			<Shipping
-				price="0"
-				shippingId="shipping-standard"
-				shippingName="標準運送"
-				period="約 3~7 個工作天"
-				onCalcFee={onCalcFee}
-			/>
-			<Shipping
-				price="500"
-				shippingId="shipping-dhl"
-				shippingName="DHL 貨運"
-				period="48 小時內送達"
-				onCalcFee={onCalcFee}
-			/>
-		</>
-	)
-}
-
-// credit-card phase
-function CreditCardPhase() {
-	return (
-		<>
-			<div className="col col-12">
-				<Input
-					largeWidth="4"
-					smallWidth="full"
-					label="持卡人姓名"
-					placeholder="John Doe"
-					type="text"
-				/>
-			</div>
-			<div className="col col-12">
-				<Input
-					largeWidth="4"
-					smallWidth="full"
-					label="卡號"
-					placeholder="1111 2222 3333 4444"
-					type="text"
-				/>
-			</div>
-			<div className="col col-12">
-				<Input
-					largeWidth="3"
-					smallWidth="s3"
-					label="有效期限"
-					placeholder="MM/YY"
-					type="text"
-				/>
-				<Input
-					largeWidth="3"
-					smallWidth="s3"
-					label="CVC / CCV"
-					placeholder="123"
-					type="text"
-				/>
-			</div>
-		</>
-	)
-}
 
 export default function Form({ phase, onCalcFee }) {
 	return (
@@ -216,9 +218,7 @@ export default function Form({ phase, onCalcFee }) {
 					{phase === 'credit-card' && '付款資訊'}
 				</h3>
 				<section className="form-body col col-12">
-					{phase === 'address' && <AddressPhase />}
-					{phase === 'shipping' && <ShippingPhase onCalcFee={onCalcFee} />}
-					{phase === 'credit-card' && <CreditCardPhase />}
+					<FormPhase phase={phase} onChange={onCalcFee} />
 				</section>
 			</form>
 		</section>
