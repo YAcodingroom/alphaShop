@@ -26,7 +26,7 @@ function Product({ price, imgURL, productName, onCalcTotal }) {
 		} else if (action === 'plus') {
 			productAmount += 1
 			onCalcTotal(price)
-		}
+		} else return
 		setAmount(productAmount)
 	}
 
