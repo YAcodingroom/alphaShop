@@ -1,4 +1,5 @@
 import React from 'react'
+import { useCart } from '../../Contexts/CartContext'
 
 const appellation = [
 	{ value: 'mr', label: '先生' },
@@ -73,7 +74,7 @@ function Input({ largeWidth, smallWidth, label, placeholder, type }) {
 	)
 }
 
-function FormPhase({ phase, onChange }) {
+function FormPhase({ phase }) {
 	if (phase === 'address')
 		return (
 			<>
@@ -134,14 +135,12 @@ function FormPhase({ phase, onChange }) {
 					shippingId="shipping-standard"
 					shippingName="標準運送"
 					period="約 3~7 個工作天"
-					onCalcFee={onChange}
 				/>
 				<Shipping
 					price="500"
 					shippingId="shipping-dhl"
 					shippingName="DHL 貨運"
 					period="48 小時內送達"
-					onCalcFee={onChange}
 				/>
 			</>
 		)
@@ -187,7 +186,9 @@ function FormPhase({ phase, onChange }) {
 		)
 }
 
-function Shipping({ price, shippingId, shippingName, period, onCalcFee }) {
+function Shipping({ price, shippingId, shippingName, period }) {
+	const { onCalcFee } = useCart()
+
 	return (
 		<label className="radio-group col col-12" data-price={price}>
 			<input
@@ -218,7 +219,7 @@ export default function Form({ phase, onCalcFee }) {
 					{phase === 'credit-card' && '付款資訊'}
 				</h3>
 				<section className="form-body col col-12">
-					<FormPhase phase={phase} onChange={onCalcFee} />
+					<FormPhase phase={phase} />
 				</section>
 			</form>
 		</section>
