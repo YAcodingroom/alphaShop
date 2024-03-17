@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useReducer, useState } from 'react'
 
 const productDatas = [
 	{
@@ -22,6 +22,7 @@ const CartContext = createContext()
 function CartProvider({ children }) {
 	const [fee, setFee] = useState(0)
 	const [total, setTotal] = useState(0)
+	const [formData, setFormData] = useState({})
 
 	function calcTotal(price) {
 		setTotal(total + price)
@@ -32,6 +33,11 @@ function CartProvider({ children }) {
 		setFee(price)
 	}
 
+	function showLog() {
+		console.log(`購物車小計：${total}`)
+		console.log(formData)
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -40,6 +46,9 @@ function CartProvider({ children }) {
 				total,
 				onCalcTotal: calcTotal,
 				onCalcFee: calcFee,
+				formData,
+				setFormData,
+				showLog,
 			}}
 		>
 			{children}

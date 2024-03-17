@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCart } from '../../Contexts/CartContext'
 
 const appellation = [
@@ -38,14 +38,22 @@ const cities = [
 	{ value: 'LNN', label: '連江縣' },
 ]
 
-function Select({ largeWidth, smallWidth, label, datas }) {
+function Select({ largeWidth, smallWidth, name, label, datas }) {
+	const [selectValue, setSelectValue] = useState('')
+	const { formData, setFormData } = useCart()
+
+	function handleChange(e) {
+		setSelectValue(e.target.value)
+		setFormData({ ...formData, [name]: e.target.value })
+	}
+
 	return (
 		<div
 			className={`input-group input-w-lg-${largeWidth} input-w-sm-${smallWidth}`}
 		>
 			<div className="input-label">{label}</div>
 			<div className="select-container">
-				<select required>
+				<select name={name} value={selectValue} onChange={handleChange}>
 					<option value="" hidden>
 						請選擇{label}
 					</option>
@@ -61,14 +69,28 @@ function Select({ largeWidth, smallWidth, label, datas }) {
 	)
 }
 
-function Input({ largeWidth, smallWidth, label, placeholder, type }) {
+function Input({ largeWidth, smallWidth, name, label, placeholder, type }) {
+	const [inputValue, setInputValue] = useState('')
+	const { formData, setFormData } = useCart()
+
+	function handleChange(e) {
+		setFormData({ ...formData, [name]: e.target.value })
+		setInputValue(e.target.value)
+	}
+
 	return (
 		<>
 			<div
 				className={`input-group input-w-lg-${largeWidth} input-w-sm-${smallWidth}`}
 			>
 				<div className="input-label">{label}</div>
-				<input type={type} placeholder={placeholder} />
+				<input
+					type={type}
+					placeholder={placeholder}
+					name={name}
+					value={inputValue}
+					onChange={handleChange}
+				/>
 			</div>
 		</>
 	)
@@ -82,12 +104,14 @@ function FormPhase({ phase }) {
 					<Select
 						largeWidth="2"
 						smallWidth="s1"
+						name="title"
 						label="稱謂"
 						datas={appellation}
 					/>
 					<Input
 						largeWidth="4"
 						smallWidth="s2"
+						name="name"
 						label="姓名"
 						placeholder="請輸入姓名"
 						type="text"
@@ -97,6 +121,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="3"
 						smallWidth="full"
+						name="tel"
 						label="電話"
 						placeholder="請輸入行動電話"
 						type="tel"
@@ -104,6 +129,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="3"
 						smallWidth="full"
+						name="email"
 						label="Email"
 						placeholder="請輸入電子郵件"
 						type="email"
@@ -113,12 +139,14 @@ function FormPhase({ phase }) {
 					<Select
 						largeWidth="2"
 						smallWidth="full"
+						name="city"
 						label="縣市"
 						datas={cities}
 					/>
 					<Input
 						largeWidth="4"
 						smallWidth="full"
+						name="address"
 						label="地址"
 						placeholder="請輸入地址"
 						type="text"
@@ -152,6 +180,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="4"
 						smallWidth="full"
+						name="cardTitle"
 						label="持卡人姓名"
 						placeholder="John Doe"
 						type="text"
@@ -161,6 +190,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="4"
 						smallWidth="full"
+						name="cardNum"
 						label="卡號"
 						placeholder="1111 2222 3333 4444"
 						type="text"
@@ -170,6 +200,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="3"
 						smallWidth="s3"
+						name="validityPeriod"
 						label="有效期限"
 						placeholder="MM/YY"
 						type="text"
@@ -177,6 +208,7 @@ function FormPhase({ phase }) {
 					<Input
 						largeWidth="3"
 						smallWidth="s3"
+						name="ccvNum"
 						label="CVC / CCV"
 						placeholder="123"
 						type="text"
@@ -209,7 +241,7 @@ function Shipping({ price, shippingId, shippingName, period }) {
 	)
 }
 
-export default function Form({ phase, onCalcFee }) {
+export default function Form({ phase }) {
 	return (
 		<section className="form-container col col-12">
 			<form className="col col-12" data-phase={phase}>

@@ -1,10 +1,21 @@
 import React from 'react'
+import { useCart } from '../../Contexts/CartContext'
 
 function Button({ className, label, imgURL, onChangeStep, phase }) {
+	const { showLog } = useCart()
+
+	function handleClick(e) {
+		if (label !== '確認下單') {
+			onChangeStep(e.target.dataset.phase, label)
+		} else {
+			showLog()
+		}
+	}
+
 	return (
 		<button
 			className={`cursor-point ${className}`}
-			onClick={(e) => onChangeStep(e.target.dataset.phase, label)}
+			onClick={handleClick}
 			data-phase={phase}
 		>
 			{label}
